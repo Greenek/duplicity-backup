@@ -543,7 +543,7 @@ duplicity_cleanup()
     {
       eval ${ECHO} ${DUPLICITY} ${CLEAN_UP_TYPE} ${CLEAN_UP_VARIABLE} ${STATIC_OPTIONS} --force \
         ${ENCRYPT} \
-        ${DEST} >> ${LOGFILE}
+        "\"$DEST\"" >> ${LOGFILE}
     } || {
       BACKUP_ERROR=1
     }
@@ -554,7 +554,7 @@ duplicity_cleanup()
       eval ${ECHO} ${DUPLICITY} remove-all-inc-of-but-n-full ${REMOVE_INCREMENTALS_OLDER_THAN} \
         ${STATIC_OPTIONS} --force \
         ${ENCRYPT} \
-        ${DEST} >> ${LOGFILE}
+        "\"$DEST\"" >> ${LOGFILE}
     } || {
       BACKUP_ERROR=1
     }
@@ -570,7 +570,7 @@ duplicity_backup()
     ${EXCLUDE} \
     ${INCLUDE} \
     ${EXCLUDEROOT} \
-    ${ROOT} ${DEST} \
+    ${ROOT} "\"$DEST\"" \
     >> ${LOGFILE}
   } || {
     BACKUP_ERROR=1
