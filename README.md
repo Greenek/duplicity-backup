@@ -1,5 +1,7 @@
 # duplicity-backup.sh
 
+> **Caution:** This fork is developed to provide basic configuration for iCloud Drive storage and it's intended for OSX users.
+
 This bash script was designed to automate and simplify the remote backup process of [duplicity](http://duplicity.nongnu.org/) on Amazon S3 primarily. Other backup destinations are possible (Google Cloud Storage, FTP, SFTP, SCP, rsync, file...), i.e. any of duplicity's supported outputs.
 
 After your script is configured, you can easily backup, restore, verify and clean (either via cron or manually) your data without having to remember lots of different command options and passphrases.
@@ -229,7 +231,7 @@ If your system's locale is not english, an error can happen when duplicity is tr
 
 This script attempts to simplify the task of running a duplicity command; if you are having any problems with the script the first step is to determine if the script is generating an incorrect command or if duplicity itself is causing your error.
 
-To see exactly what is happening when you run duplicity-backup, either pass the option `-d` or `--debug` on the command line, or head to the bottom of the configuration file and uncomment the `ECHO=$(which echo)` variable. 
+To see exactly what is happening when you run duplicity-backup, either pass the option `-d` or `--debug` on the command line, or head to the bottom of the configuration file and uncomment the `ECHO=$(which echo)` variable.
 
 This will stop the script from running and will, instead, output the generated command into your log file. You can then check to see if what is being generated is causing an error or if it is duplicity causing you woe.
 
@@ -243,4 +245,3 @@ You can also try the `-n` or `--dry-run` option. This will make duplicity to cal
 
 
 ###### Thanks to all the [contributors](https://github.com/zertrin/duplicity-backup/graphs/contributors) for their help.
-
