@@ -71,11 +71,15 @@
 # BACKUP SOURCE INFORMATION
 # ------------------------------------------------------------------------------
 #
+# Name of the user whose iCloud account will be used as a storage.
+#
+USERNAME="YOUR_USERNAME"
+
 # The ROOT of your backup (where you want the backup to start);
 # This can be / or somewhere else -- I use /home/ because all the
 # directories that I want to backup start with /home/.
 #
-ROOT="/home"
+ROOT="/Users/$USERNAME"
 
 # Set hostname for this duplicity instance, usefull for e-mail reports
 #
@@ -96,7 +100,7 @@ HOSTNAME=$(hostname -f)
 # remote file size check will work.
 
 #DEST="s3://host/backup-bucket/backup-folder/"
-DEST="s3+http://foobar-backup-bucket/backup-folder/"
+DEST="file:///Users/$USERNAME/Library/Mobile Documents/com~apple~CloudDocs/Backup"
 
 # Other possible locations
 # Be sure to check duplicity's man page to know how to use them
@@ -183,7 +187,8 @@ DEST="s3+http://foobar-backup-bucket/backup-folder/"
 #
 # Simpler example with one location:
 
-INCLIST=( "/home/foobar_user_name/Documents/" )
+INCLIST=(   "$ROOT/Documents/" \
+        )
 
 
 # ------------------------------------------------------------------------------
@@ -203,7 +208,8 @@ INCLIST=( "/home/foobar_user_name/Documents/" )
 #        )
 # Simpler example with one location. Adapt it to your needs.
 
-EXCLIST=( "/home/foobar_user_name/Documents/foobar-to-exclude" )
+EXCLIST=(   "/**.DS_Store" \
+        )
 
 
 # ------------------------------------------------------------------------------
@@ -242,7 +248,7 @@ EXCLIST=( "/home/foobar_user_name/Documents/foobar-to-exclude" )
 # Do you want your backup to be encrypted? yes/no
 # If yes, please make sure you specify either PASSPHRASE or GPG_ENC_KEY/GPG_SIGN_KEY
 
-ENCRYPTION='yes'
+ENCRYPTION='no'
 
 # If you are NOT running this from a cron, comment this line out
 # and duplicity should prompt you for your password.
@@ -252,7 +258,7 @@ ENCRYPTION='yes'
 # Comment out if you aren't using encryption
 # Note: if you have a '$' in your passphrase, escape it with a '\'
 
-PASSPHRASE="foobar_gpg_passphrase"
+# PASSPHRASE="foobar_gpg_passphrase"
 
 # Specify which GPG keys you would like to use (even if you have only one).
 # If you are running this from a cron, it is highly recommended to create separate
@@ -266,8 +272,8 @@ PASSPHRASE="foobar_gpg_passphrase"
 # Comment out if you're using only PASSPHRASE (symmetric encryption) or not using
 # encryption at all.
 
-GPG_ENC_KEY="foobar_gpg_key"
-GPG_SIGN_KEY="foobar_gpg_key"
+# GPG_ENC_KEY="foobar_gpg_key"
+# GPG_SIGN_KEY="foobar_gpg_key"
 
 # Do you want to hide the key id of the encrypted files? yes/no
 # It uses the gpg's --hidden-recipient command to obfuscate the owner of the backup.
@@ -294,7 +300,7 @@ GPG_SIGN_KEY="foobar_gpg_key"
 # Amazon S3 in Europe) `--s3-use-new-style` and `--s3-european-buckets` options
 # Be sure to separate your options with appropriate spacing.
 
-STATIC_OPTIONS="--full-if-older-than 14D --s3-use-new-style"
+STATIC_OPTIONS="--full-if-older-than 1M"
 
 
 # ------------------------------------------------------------------------------
@@ -346,15 +352,15 @@ CLEAN_UP_VARIABLE="4"
 # I run this script as root, but save the log files under my user name --
 # just makes it easier for me to read them and delete them as needed.
 
-LOGDIR="/home/foobar_user_name/logs/test2/"
+LOGDIR="/usr/local/var/log/duplicity/"
 LOG_FILE="duplicity-`date +%Y-%m-%d_%H-%M`.txt"
-LOG_FILE_OWNER="foobar_user_name:foobar_user_name"
+LOG_FILE_OWNER="$USERNAME:staff"
 
 # Note that if the configured LOGDIR does not exist it will be created
 # and its owner:group set to that of the configured LOG_FILE_OWNER.
 # If the configured LOGDIR already exists no change to owner:group is attempted.
 #
-#REMOVE_LOGS_OLDER_THAN='30' # (days) uncomment to activate
+REMOVE_LOGS_OLDER_THAN='14' # (days) uncomment to activate
 
 VERBOSITY="-v3"
 
@@ -380,8 +386,8 @@ EMAIL_SUBJECT=
 EMAIL_FAILURE_ONLY="yes" # send e-mail only if there was an error while creating backup
 
 # command to use to send mail
-MAIL="mailx"     # default command for Linux mail
-#MAIL="mail"     # for CentOS, if "mailx" fails try this one
+MAIL="mail"       # default command for OSX mail
+#MAIL="mailx"     # default command for Linux mail
 #MAIL="ssmtp"
 #MAIL="sendmail"
 #MAIL="msmtp"
