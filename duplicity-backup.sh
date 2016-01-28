@@ -815,7 +815,7 @@ case "$COMMAND" in
     eval \
     ${DUPLICITY} ${OPTION} ${VERBOSITY} ${STATIC_OPTIONS} \
     $ENCRYPT \
-    ${DEST} | tee -a ${LOGFILE}
+    "\"$DEST\"" | tee -a ${LOGFILE}
     echo -e "---------------------    END    ---------------------\n" >> ${LOGFILE}
   ;;
 
@@ -825,7 +825,7 @@ case "$COMMAND" in
     eval \
     ${DUPLICITY} ${OPTION} ${VERBOSITY} ${STATIC_OPTIONS} \
     $ENCRYPT \
-    ${DEST} | tee -a ${LOGFILE}
+    "\"$DEST\"" | tee -a ${LOGFILE}
     echo -e "---------------------    END    ---------------------\n" >> ${LOGFILE}
   ;;
 
